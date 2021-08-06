@@ -57,7 +57,7 @@ public class Tracker {
 
     private final Matomo mMatomo;
     private final String mApiUrl;
-    private final int mSiteId;
+    private final String mSiteId;
     private final String mDefaultApplicationBaseUrl;
     private final Object mTrackingLock = new Object();
     private final Dispatcher mDispatcher;
@@ -151,7 +151,7 @@ public class Tracker {
         return mApiUrl;
     }
 
-    protected int getSiteId() {
+    protected String getSiteId() {
         return mSiteId;
     }
 
@@ -494,7 +494,7 @@ public class Tracker {
 
         Tracker tracker = (Tracker) o;
 
-        if (mSiteId != tracker.mSiteId) return false;
+        if (!mSiteId.equals(tracker.mSiteId)) return false;
         if (!mApiUrl.equals(tracker.mApiUrl)) return false;
         return mName.equals(tracker.mName);
 
@@ -503,7 +503,7 @@ public class Tracker {
     @Override
     public int hashCode() {
         int result = mApiUrl.hashCode();
-        result = 31 * result + mSiteId;
+        result = 31 * result + mSiteId.hashCode();
         result = 31 * result + mName.hashCode();
         return result;
     }

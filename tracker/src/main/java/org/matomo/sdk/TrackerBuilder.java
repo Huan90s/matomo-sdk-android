@@ -8,11 +8,11 @@ import java.net.URL;
  */
 public class TrackerBuilder {
     private String mApiUrl;
-    private int mSiteId;
+    private String mSiteId;
     private String mTrackerName;
     private String mApplicationBaseUrl;
 
-    public static TrackerBuilder createDefault(String apiUrl, int siteId) {
+    public static TrackerBuilder createDefault(String apiUrl, String siteId) {
         return new TrackerBuilder(apiUrl, siteId, "Default Tracker");
     }
 
@@ -21,7 +21,7 @@ public class TrackerBuilder {
      * @param siteId      id of your site in the backend
      * @param trackerName name of your tracker, will be used to store configuration data
      */
-    public TrackerBuilder(String apiUrl, int siteId, String trackerName) {
+    public TrackerBuilder(String apiUrl, String siteId, String trackerName) {
         try {
             new URL(apiUrl);
         } catch (MalformedURLException e) {
@@ -36,7 +36,7 @@ public class TrackerBuilder {
         return mApiUrl;
     }
 
-    public int getSiteId() {
+    public String getSiteId() {
         return mSiteId;
     }
 
@@ -81,13 +81,13 @@ public class TrackerBuilder {
 
         TrackerBuilder that = (TrackerBuilder) o;
 
-        return mSiteId == that.mSiteId && mApiUrl.equals(that.mApiUrl) && mTrackerName.equals(that.mTrackerName);
+        return mSiteId.equals(that.mSiteId) && mApiUrl.equals(that.mApiUrl) && mTrackerName.equals(that.mTrackerName);
     }
 
     @Override
     public int hashCode() {
         int result = mApiUrl.hashCode();
-        result = 31 * result + mSiteId;
+        result = 31 * result + mSiteId.hashCode();
         result = 31 * result + mTrackerName.hashCode();
         return result;
     }
