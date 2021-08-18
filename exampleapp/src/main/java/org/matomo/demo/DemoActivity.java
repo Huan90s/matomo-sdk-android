@@ -46,6 +46,9 @@ public class DemoActivity extends AppCompatActivity {
                         .screen("/")
                         .title("Main screen")
                         .with(getTracker())
+
+//                TrackHelper.track().event("category", "action").name("label").value(1000f).with(getTracker())
+
         );
 
         findViewById(R.id.trackDispatchNow).setOnClickListener(v ->

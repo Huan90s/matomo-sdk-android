@@ -20,6 +20,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -414,11 +415,14 @@ public class Tracker {
      * These parameters are required for all queries.
      */
     private void injectBaseParams(TrackMe trackMe) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         trackMe.trySet(QueryParams.SITE_ID, mSiteId);
         trackMe.trySet(QueryParams.RECORD, DEFAULT_RECORD_VALUE);
         trackMe.trySet(QueryParams.API_VERSION, DEFAULT_API_VERSION_VALUE);
         trackMe.trySet(QueryParams.RANDOM_NUMBER, mRandomAntiCachingValue.nextInt(100000));
-        trackMe.trySet(QueryParams.DATETIME_OF_REQUEST, new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.US).format(new Date()));
+        trackMe.trySet(QueryParams.DATETIME_OF_REQUEST, simpleDateFormat.format(new Date()));
         trackMe.trySet(QueryParams.SEND_IMAGE, "0");
 
         trackMe.trySet(QueryParams.VISITOR_ID, mDefaultTrackMe.get(QueryParams.VISITOR_ID));
