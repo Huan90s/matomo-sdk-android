@@ -16,6 +16,7 @@ import android.widget.EditText;
 import org.matomo.sdk.QueryParams;
 import org.matomo.sdk.TrackMe;
 import org.matomo.sdk.Tracker;
+import org.matomo.sdk.extra.CustomVariables;
 import org.matomo.sdk.extra.EcommerceItems;
 import org.matomo.sdk.extra.MatomoApplication;
 import org.matomo.sdk.extra.TrackHelper;
@@ -35,19 +36,21 @@ public class DemoActivity extends AppCompatActivity {
     }
 
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
         items = new EcommerceItems();
+        CustomVariables varsA = new CustomVariables().put(1, "visit1", "A");
 
         findViewById(R.id.trackMainScreenViewButton).setOnClickListener(v ->
-                TrackHelper.track(new TrackMe().set(QueryParams.SESSION_START, 1))
-                        .screen("/")
-                        .title("Main screen")
-                        .with(getTracker())
+//                TrackHelper.track(new TrackMe().set(QueryParams.SESSION_START, 1))
+//                        .visitVariables(varsA)
+//                        .screen("/")
+//                        .title("Main screen")
+//                        .dimension(123, "huanhuanhuan")
+//                        .with(getTracker())
 
-//                TrackHelper.track().event("category", "action").name("label").value(1000f).with(getTracker())
+                TrackHelper.track().event("category", "action").name("label").value(1000f).customData("dataKey1","dataValue1").customData("dataKey2","dataValue2").with(getTracker())
 
         );
 

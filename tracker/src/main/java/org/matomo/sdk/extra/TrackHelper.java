@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.matomo.sdk.Matomo;
 import org.matomo.sdk.QueryParams;
 import org.matomo.sdk.TrackMe;
@@ -218,6 +220,7 @@ public class TrackHelper {
         private String mPath;
         private String mName;
         private Float mValue;
+        private JSONObject mCustomData = new JSONObject();
 
         EventBuilder(TrackHelper builder, String category, String action) {
             super(builder);
@@ -252,12 +255,22 @@ public class TrackHelper {
             return this;
         }
 
+        public EventBuilder customData(String key,Object value){
+            try {
+                mCustomData.put(key,value);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return this;
+        }
+
         @Override
         public TrackMe build() {
             TrackMe trackMe = new TrackMe(getBaseTrackMe())
                     .set(QueryParams.URL_PATH, mPath)
                     .set(QueryParams.EVENT_CATEGORY, mCategory)
                     .set(QueryParams.EVENT_ACTION, mAction)
+                    .set(QueryParams.VISIT_SCOPE_CUSTOM_DATA,mCustomData.toString())
                     .set(QueryParams.EVENT_NAME, mName);
             if (mValue != null) trackMe.set(QueryParams.EVENT_VALUE, mValue);
             return trackMe;

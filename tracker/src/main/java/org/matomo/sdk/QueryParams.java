@@ -282,6 +282,8 @@ public enum QueryParams {
      */
     SUBTOTAL("ec_st"),
 
+    VISIT_SCOPE_CUSTOM_DATA("data"),
+
     // Other parameters
     /**
      * If set to 0 (send_image=0) Matomo will respond with a HTTP 204 response code instead of a GIF image.<p>
